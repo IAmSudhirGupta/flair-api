@@ -6,7 +6,6 @@ router.use(bodyParser.json());
 var DataSource = require("../MongoUtil");
 
 router.get("/", async function (req, res) {
-  console.log("Inside get Post controller...");
   try {
     let db = await DataSource.Get();
     if (!db)
