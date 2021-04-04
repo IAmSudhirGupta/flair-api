@@ -115,11 +115,6 @@ router.post("/login", function (req, res) {
   });
 });
 
-// router.post("/user-exist"), function(req, res){
-//   User.findOne({$or:[{ email: req.body.emailPhone },{phone: req.body.emailPhone}]}, function (err, user) {
-
-//   });
-// });
 router.post("/user-exist", function (req, res) {
   User.findOne(
     { $or: [{ phone: req.body.emailPhone }, { email: req.body.emailPhone }] },
@@ -135,7 +130,7 @@ router.post("/user-exist", function (req, res) {
           .status(404)
           .send({ status: "error", message: "No user found." });
 
-      return res.status(200).send(user);
+      return res.status(200).send((status: "success"), (data: user));
     }
   );
   // return res.status(200).send({ status: "success", data: user });
