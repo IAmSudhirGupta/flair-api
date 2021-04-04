@@ -3,7 +3,7 @@ var UserSchema = new mongoose.Schema({
     userName: { type: String, required: true },
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
-    phone: { type: Number, required: true },
+    phone: { type: String, required: true },
     email: { type: String, required: true },
     gender: { type: String, required: false },
     dob: { type: Date, required: false },

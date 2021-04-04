@@ -69,12 +69,10 @@ router.post("/register/device", async function (req, res) {
       .send({ status: "success", message: "device registered successfully" });
   } catch (error) {
     console.log("register/device: ", error);
-    res
-      .status(500)
-      .send({
-        status: "error",
-        message: "There was a problem registering the device",
-      });
+    res.status(500).send({
+      status: "error",
+      message: "There was a problem registering the device",
+    });
   }
 });
 router.get("/me", verifyToken, function (req, res, next) {
@@ -116,6 +114,33 @@ router.post("/login", function (req, res) {
     res.status(200).send({ auth: true, token: token, data: user });
   });
 });
+
+// router.post("/user-exist"), function(req, res){
+//   User.findOne({$or:[{ email: req.body.emailPhone },{phone: req.body.emailPhone}]}, function (err, user) {
+
+//   });
+// });
+router.post("/user-exist", verifyToken, function (req, res) {
+  User.findOne(
+    { $or: [{ phone: req.body.emailPhone }, { email: req.body.emailPhone }] },
+    function (err, user) {
+      if (err) {
+        return res.status(500).send({
+          status: "error",
+          message: "There was a problem finding the user: " + err,
+        });
+      }
+      if (!user)
+        return res
+          .status(404)
+          .send({ status: "error", message: "No user found." });
+
+      return res.status(200).send(user);
+    }
+  );
+  // return res.status(200).send({ status: "success", data: user });
+});
+
 router.post("/reset-password", verifyToken, function (req, res) {
   User.findById(req.body.id, function (err, user) {
     if (err)
