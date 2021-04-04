@@ -120,7 +120,7 @@ router.post("/login", function (req, res) {
 
 //   });
 // });
-router.post("/user-exist", verifyToken, function (req, res) {
+router.post("/user-exist", function (req, res) {
   User.findOne(
     { $or: [{ phone: req.body.emailPhone }, { email: req.body.emailPhone }] },
     function (err, user) {
